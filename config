@@ -1,0 +1,3 @@
+host github.com
+IdentityFile ~/.ssh/github
+user YuvalSal99
