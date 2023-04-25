@@ -1,6 +1,9 @@
 
 
 
+
+
+
 week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
 times = ['10:00', '11:00', '12:00', '13:00', '14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00',]
 
@@ -13,9 +16,9 @@ def check_days_can_do():
         for i in f.readlines():
              day=i.split()[4]
              if day in week:
-                # people=i.split()[0]
-                # can_do.append(people)
-                can_do.append((day))
+                 time=i.split()[6]
+                 can_do.append(day)
+                 can_do.append(time)
     return can_do
 
 def check_days_ward_available():
@@ -24,51 +27,26 @@ def check_days_ward_available():
         for i in f.readlines():
              day=i.split()[5]
              if day in week:
-                # people=i.split()[0]
-                # available.append(people)
-                available.append(day)
+                 try:
+                     time=i.split()[7]
+                     available.append(day)
+                     available.append(time)
+                 except Exception:
+                     pass
     return available
-
-def check_times_can_do():
-    time_can_do = []
-    with open('log.txt', 'r') as f:
-        for i in f.readlines():
-            time = i.split()[6]
-            if time in times:
-                # people = i.split()[0]
-                # time_can_do.append(people)
-                time_can_do.append((time))
-    return time_can_do
-
-
-def check_times_yard_available():
-    times_yard_available = []
-    with open('log.txt', 'r') as f:
-        for i in f.readlines():
-            try:
-                time = i.split()[7]
-                if time in times:
-                    # people = i.split()[0]
-                    # times_yard_available.append(people)
-                    times_yard_available.append(time)
-            except  Exception:
-                pass
-
-    return times_yard_available
 
 
 def main():
     count=0
+        
 
 
 
 
 days_can_do=check_days_can_do()
 days_yard_av=check_days_ward_available()
-times_can_do=check_times_can_do()
-times_av=check_times_yard_available()
 
-print(days_yard_av)
-print(days_can_do)
-print(times_av)
-print(times_can_do)
+
+print('yard available',days_yard_av)
+print('days can do', days_can_do)
+
