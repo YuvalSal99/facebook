@@ -1,8 +1,6 @@
 
 
 
-
-
 week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
 times = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00',
          '22:00', '23:00', ]
@@ -14,7 +12,9 @@ def check_days_can_do():
         for i in f.readlines():
             day = i.split()[4]
             if day in week:
+                people = i.split()[0]
                 time = i.split()[6]
+                can_do.append(people)
                 can_do.append(day)
                 can_do.append(time)
     return can_do
@@ -27,7 +27,9 @@ def check_days_ward_available():
             day = i.split()[5]
             if day in week:
                 try:
+                    people = i.split()[0]
                     time = i.split()[7]
+                    available.append(people)
                     available.append(day)
                     available.append(time)
                 except Exception:
@@ -36,45 +38,50 @@ def check_days_ward_available():
 
 
 def can_do_merge():
-    test=[]
-    for i in range(1,len(days_can_do),2):
-        days=(days_can_do[i], days_can_do[i-1])
+    test = []
+    for i in range(2,len(days_can_do),3):
+        days=[days_can_do[i-2], days_can_do[i-1],days_can_do[i]]
         test.append(days)
     return test
 
 
 def yard_av_merge():
-    test=[]
-    for i in range(1,len(days_yard_av),2):
-        days=(days_yard_av[i], days_yard_av[i-1])
+    test = []
+    for i in range(2,len(days_yard_av),3):
+        days=[days_yard_av[i-2], days_yard_av[i-1],days_yard_av[i]]
         test.append(days)
     return test
 
 
 
 def main():
-
+    peoples = []
     for i in yard_av_merge():
-        count=0
+        count = 0
+        peoples.clear()
         for x in can_do_merge():
-
-            if x==i:
-                count=count+1
-                if count==8:
-                    print('we will meet at:',i)
-                    count=0
-            else:
-                count=count
+            if x[1] == i[1] and x[2] == i[2]:
+                if x[0] not in peoples:
+                    people = x[0]
+                    peoples.append(people)
+                    count = count + 1
+                    if count == 8:
+                        print('we will meet at:',i[0],'his house on',i[1],'at hour',i[2])
+                        count = 0
+                        peoples.clear()
 
 
 days_can_do = check_days_can_do()
 days_yard_av = check_days_ward_available()
-time_i_can=can_do_merge()
-my_yard_av=yard_av_merge()
+time_i_can = can_do_merge()
+my_yard_av = yard_av_merge()
 main()
 
 # print('yard available', days_yard_av)
 # print('days can do', days_can_do)
 # print('test',can_do_merge())
 # print('test',yard_av_merge())
+
+
+
 
